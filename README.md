@@ -20,8 +20,13 @@ The login result includes the Nexar token for GraphQL queries.
 ## Example
 
 ```csharp
+using Nexar.Client.Login;
+
 var result = await LoginHelper.LoginAsync("https://identity.nexar.com/");
-var token = result.AccessToken;
+string token = result.AccessToken;
 ```
 
-This package is used by [nexar-token-cs](https://github.com/NexarDeveloper/nexar-token-cs).
+## See also
+
+- [Sample/Program.cs](Sample/Program.cs) - simple demo console app
+- [nexar-token-cs](https://github.com/NexarDeveloper/nexar-token-cs) - console app for getting various Nexar tokens
