@@ -22,7 +22,7 @@ The login result includes the Nexar token for GraphQL queries.
 ```csharp
 using Nexar.Client.Login;
 
-var result = await LoginHelper.LoginAsync("https://identity.nexar.com/");
+var result = await LoginHelper.LoginAsync(clientId, clientSecret);
 string token = result.AccessToken;
 ```
 
