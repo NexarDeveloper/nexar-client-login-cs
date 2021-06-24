@@ -1,5 +1,6 @@
 ﻿using IdentityModel.OidcClient;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Nexar.Client.Login
@@ -11,6 +12,7 @@ namespace Nexar.Client.Login
         public static async Task<LoginInfo> LoginAsync(
             string clientId,
             string clientSecret,
+            string[] scopes,
             string authority = "https://identity.nexar.com/")
         {
             if (clientId == null)
@@ -20,6 +22,10 @@ namespace Nexar.Client.Login
             if (authority == null)
                 throw new ArgumentNullException(nameof(authority));
 
+            var allScopes = new List<string> { "openid", "profile", "email" };
+            if (scopes != null)
+                allScopes.AddRange(scopes);
+
             var browser = new SystemBrowser(3000);
 
             var options = new OidcClientOptions
@@ -28,8 +34,7 @@ namespace Nexar.Client.Login
                 ClientId = clientId,
                 ClientSecret = clientSecret,
                 RedirectUri = "http://localhost:3000/login",
-                // Adjust the below scopes (specifically design.domain, supply.domain) based on your applications permissions
-                Scope = "openid profile email user.access design.domain supply.domain",
+                Scope = string.Join(" ", allScopes),
                 FilterClaims = false,
                 Browser = browser,
                 Flow = OidcClientOptions.AuthenticationFlow.AuthorizationCode,
