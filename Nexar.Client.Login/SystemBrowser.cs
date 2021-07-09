@@ -82,9 +82,9 @@ namespace Nexar.Client.Login
     {
         const int DefaultTimeout = 60 * 5; // 5 mins (in seconds)
 
-        IWebHost _host;
-        TaskCompletionSource<string> _source = new TaskCompletionSource<string>();
-        string _url;
+        readonly TaskCompletionSource<string> _source = new TaskCompletionSource<string>();
+        readonly IWebHost _host;
+        readonly string _url;
 
         public string Url => _url;
 
@@ -139,13 +139,53 @@ namespace Nexar.Client.Login
             });
         }
 
+        const string Html200 = @"
+<html>
+<head>
+  <link href=""https://fonts.googleapis.com/css?family=Montserrat:400,700"" rel=""stylesheet"" type=""text/css"">
+  <title>Welcome to Nexar</title>
+  <style>
+    html {
+      height: 100%;
+      background-image: linear-gradient(to right, #000b24, #001440);
+    }
+    body {
+      color: #ffffff;
+    }
+    .center {
+      width: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .title {
+      font-family: Montserrat, sans-serif;
+      font-weight: 400;
+    }
+    .normal {
+      font-family: Montserrat, sans-serif;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+  <div class=""center"">
+    <h1 class=""title"">Welcome to Nexar</h1>
+    <p class=""normal"">You can now return to the application.</p>
+  </div>
+</body>
+</html>
+";
+
         private void SetResult(string value, HttpContext ctx)
         {
             try
             {
                 ctx.Response.StatusCode = 200;
                 ctx.Response.ContentType = "text/html";
-                ctx.Response.WriteAsync("<h1>You can now return to the application.</h1>");
+                ctx.Response.WriteAsync(Html200);
                 ctx.Response.Body.Flush();
 
                 _source.TrySetResult(value);
