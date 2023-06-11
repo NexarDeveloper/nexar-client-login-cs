@@ -6,26 +6,23 @@ Login helper for Nexar desktop clients.
 
 ## Synopsis
 
-The package provides `Nexar.Client.Login.LoginHelper.LoginAsync()`.
+The package provides the only method: `Nexar.Client.Login.LoginHelper.LoginAsync()`.
 
-This method starts the system browser at the Nexar identity server login page
-for signing in. and returns the login result to the caller.  The login result
-includes the Nexar token for GraphQL queries.
+This method opens the system browser at the Nexar login page for signing in and
+returns the login result to the caller.  The result includes the access token
+for Nexar services and, with `user.access`, the user name.
 
 ## Example
 
 ```csharp
 using Nexar.Client.Login;
 
+var scopes = new string[] { "user.access", "design.domain", "supply.domain" };
 var result = await LoginHelper.LoginAsync(clientId, clientSecret, scopes);
+
 var token = result.AccessToken;
+var username = result.Username;
 ```
-
-where `scopes` include:
-
-- `user.access`
-- `design.domain`
-- `supply.domain`
 
 ## See also
 

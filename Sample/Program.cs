@@ -17,11 +17,11 @@ namespace Sample
             var scopes = args.Skip(2).ToArray();
 
             var result = await LoginHelper.LoginAsync(clientId, clientSecret, scopes);
-            var username = result.Username;
             var token = result.AccessToken;
+            var username = result.Username;
 
-            Console.WriteLine(username);
             Console.WriteLine(token);
+            Console.WriteLine(username);
         }
     }
 }
