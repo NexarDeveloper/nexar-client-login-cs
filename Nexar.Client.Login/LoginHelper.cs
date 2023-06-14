@@ -143,6 +143,9 @@ namespace Nexar.Client.Login
     <h1 class='title'>Welcome to Nexar</h1>
     <p class='normal'>You can now return to the application.</p>
   </div>
+  <script>
+    setTimeout(function() { window.close() }, 1000)
+  </script>
 </body>
 </html>
 ";
